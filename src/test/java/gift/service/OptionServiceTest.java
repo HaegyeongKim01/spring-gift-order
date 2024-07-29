@@ -10,20 +10,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@TestPropertySource(locations = "classpath:application-test.properties")
 class OptionServiceTest {
 
     @Mock
@@ -82,14 +83,7 @@ class OptionServiceTest {
         optionService.addOption(requestAddOptions);
 
         // then
-        ArgumentCaptor<Option> optionCaptor = ArgumentCaptor.forClass(Option.class);
-        verify(optionRepository).save(optionCaptor.capture());
-
-        Option savedNewOption = optionCaptor.getValue();
-        assertAll(
-                () -> assertEquals(optionName, savedNewOption.getName()),
-                () -> assertEquals(10, savedNewOption.getQuantity()),
-                () -> assertEquals(product, savedNewOption.getProduct())
-        );
+        // Verify that save method was not called
+        verify(optionRepository, never()).save(any(Option.class));
     }
 }

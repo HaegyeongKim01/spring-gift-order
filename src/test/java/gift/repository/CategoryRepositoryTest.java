@@ -4,14 +4,12 @@ import gift.vo.Category;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(locations = "classpath:application-test.properties")
 class CategoryRepositoryTest {
 
@@ -22,7 +20,7 @@ class CategoryRepositoryTest {
     @DisplayName("Save Category")
     void save() {
         // given
-        Category category = new Category(null, "new_카테코리명", "#123412", "http://testimage.png", "this is test");
+        Category category = new Category(null, "new_카테고리명", "#123412", "http://testimage.png", "this is test");
 
         // when
         Category actual = categoryRepository.save(category);
@@ -35,7 +33,7 @@ class CategoryRepositoryTest {
     @DisplayName("Find Category By Id")
     void findById() {
         // given
-        Category category = new Category(null, "카테코리명", "#123412", "http://testimage.png", "this is test");
+        Category category = new Category(null, "카테고리명", "#123412", "http://testimage.png", "this is test");
         categoryRepository.save(category);
 
         // when
@@ -50,7 +48,7 @@ class CategoryRepositoryTest {
     @DisplayName("Delete Category By Id")
     void deleteById() {
         // given
-        Category category = new Category(null, "카테코리명", "#123412", "http://testimage.png", "this is test");
+        Category category = new Category(null, "카테고리명", "#123412", "http://testimage.png", "this is test");
         Category savedCategory = categoryRepository.save(category);
         Long categoryId = savedCategory.getId();
 
